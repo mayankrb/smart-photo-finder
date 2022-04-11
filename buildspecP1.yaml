@@ -2,7 +2,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - aws cloudformation package --template-file SamTemplateP1.yaml --s3-bucket bucket-pipeline-1 --output-template-file outputTemplateP1.yaml
+      - aws cloudformation package --template-file SamTemplateP1.yaml --s3-bucket photoalbummb --output-template-file outputTemplateP1.yaml
 artifacts:
   type: zip
   files:

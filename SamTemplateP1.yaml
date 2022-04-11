@@ -6,10 +6,10 @@ Resources:
   photosalbumb:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: photosalbumb
+      BucketName: photosalbummb7992
     Environment:
         Variables:
-          REGION: us-west-2
+          REGION: us-east-1
 
   indexphotosP1:
     Type: 'AWS::Serverless::Function'
@@ -20,14 +20,10 @@ Resources:
       Description: ''
       MemorySize: 128
       Timeout: 3
-      Role: 'arn:aws:iam::226417489901:role/service-role/index-photos-role-kqecrg96'
-    
+      Role: 'arn:aws:iam::931871336172:role/service-role/LF1-index-photos-role-lh3gnyga'
       Layers:
         - >-
-          arn:aws:lambda:us-west-2:770693421928:layer:Klayers-p38-opensearch-py:1
-        - 'arn:aws:lambda:us-west-2:770693421928:layer:Klayers-p38-requests:2'
-        - >-
-          arn:aws:lambda:us-west-2:770693421928:layer:Klayers-p38-aws-requests-auth:2
+          arn:aws:lambda:us-east-1:931871336172:layer:LF2PackagesLayer:1
       Events:
         BucketEvent1:
           Type: S3
@@ -38,7 +34,7 @@ Resources:
               - 's3:ObjectCreated:Put'
       Environment:
         Variables:
-          REGION: us-west-2
+          REGION: us-east-1
   searchphotosP1:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -47,18 +43,14 @@ Resources:
       CodeUri: ./LF2
       Description: ''
       MemorySize: 128
-      Timeout: 300
-      Role: 'arn:aws:iam::226417489901:role/service-role/search-photos-role-xq8hi14s'
+      Timeout: 3
+      Role: 'arn:aws:iam::931871336172:role/service-role/LF2-search-photos-role-8547ipu2'
       Layers:
         - >-
-          arn:aws:lambda:us-west-2:770693421928:layer:Klayers-p38-opensearch-py:1
-        - 'arn:aws:lambda:us-west-2:770693421928:layer:Klayers-p38-requests:2'
-        - >-
-          arn:aws:lambda:us-west-2:770693421928:layer:Klayers-p38-aws-requests-auth:2
-        - 'arn:aws:lambda:us-west-2:226417489901:layer:requests_aws4auth:1'
+          arn:aws:lambda:us-east-1:931871336172:layer:LF2PackagesLayer:1
       Environment:
         Variables:
-          REGION: us-west-2
+          REGION: us-east-1
       Events:
         RestApiPhotoAlbum:
           Type: Api
@@ -70,7 +62,7 @@ Resources:
     Type: AWS::ApiGateway::RestApi
     Properties:
       BodyS3Location:
-        Bucket: bucket-pipeline-1
+        Bucket: photoalbummb
         Key: "api.yaml"
       Description: "Rest api having search photos and upload photos methods."
       Name: RestApiPhotoAlbum
@@ -101,34 +93,34 @@ Resources:
       SourceAccount: !Ref "AWS::AccountId"
       SourceArn: "arn:aws:s3:::photosalbumb"
 
-  OpenSearchServiceDomain:
-    Type: AWS::OpenSearchService::Domain
-    Properties:
-      DomainName: 'photo'
-      EngineVersion: 'OpenSearch_1.0'
-      ClusterConfig:
-        InstanceCount: '1'
-        InstanceType: 't3.small.search'
-      EBSOptions:
-        EBSEnabled: true
-        Iops: '0'
-        VolumeSize: '10'
-        VolumeType: 'gp2'
-      AccessPolicies:
-        Version: '2012-10-17'
-        Statement:
-          -
-            Effect: 'Allow'
-            Principal:
-                AWS: "*"
-            Action: es:*
-            Resource: 'arn:aws:iam::226417489901:domain/photo'
-      DomainEndpointOptions:
-        EnforceHTTPS: true
-      EncryptionAtRestOptions:
-        Enabled: true
-      NodeToNodeEncryptionOptions:
-        Enabled: true
+  # OpenSearchServiceDomain:
+  #   Type: AWS::OpenSearchService::Domain
+  #   Properties:
+  #     DomainName: 'photo'
+  #     EngineVersion: 'OpenSearch_1.0'
+  #     ClusterConfig:
+  #       InstanceCount: '1'
+  #       InstanceType: 't3.small.search'
+  #     EBSOptions:
+  #       EBSEnabled: true
+  #       Iops: '0'
+  #       VolumeSize: '10'
+  #       VolumeType: 'gp2'
+  #     AccessPolicies:
+  #       Version: '2012-10-17'
+  #       Statement:
+  #         -
+  #           Effect: 'Allow'
+  #           Principal:
+  #               AWS: "*"
+  #           Action: es:*
+  #           Resource: 'arn:aws:iam::226417489901:domain/photo'
+  #     DomainEndpointOptions:
+  #       EnforceHTTPS: true
+  #     EncryptionAtRestOptions:
+  #       Enabled: true
+  #     NodeToNodeEncryptionOptions:
+  #       Enabled: true
 
   RestApiPhotoAlbumDeployment:
     Type: AWS::ApiGateway::Deployment

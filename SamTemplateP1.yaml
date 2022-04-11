@@ -93,34 +93,34 @@ Resources:
       SourceAccount: !Ref "AWS::AccountId"
       SourceArn: "arn:aws:s3:::photosalbumb"
 
-  # OpenSearchServiceDomain:
-  #   Type: AWS::OpenSearchService::Domain
-  #   Properties:
-  #     DomainName: 'photo'
-  #     EngineVersion: 'OpenSearch_1.0'
-  #     ClusterConfig:
-  #       InstanceCount: '1'
-  #       InstanceType: 't3.small.search'
-  #     EBSOptions:
-  #       EBSEnabled: true
-  #       Iops: '0'
-  #       VolumeSize: '10'
-  #       VolumeType: 'gp2'
-  #     AccessPolicies:
-  #       Version: '2012-10-17'
-  #       Statement:
-  #         -
-  #           Effect: 'Allow'
-  #           Principal:
-  #               AWS: "*"
-  #           Action: es:*
-  #           Resource: 'arn:aws:iam::226417489901:domain/photo'
-  #     DomainEndpointOptions:
-  #       EnforceHTTPS: true
-  #     EncryptionAtRestOptions:
-  #       Enabled: true
-  #     NodeToNodeEncryptionOptions:
-  #       Enabled: true
+  OpenSearchServiceDomain:
+    Type: AWS::OpenSearchService::Domain
+    Properties:
+      DomainName: 'photo'
+      EngineVersion: 'OpenSearch_1.0'
+      ClusterConfig:
+        InstanceCount: '1'
+        InstanceType: 't3.small.search'
+      EBSOptions:
+        EBSEnabled: true
+        Iops: '0'
+        VolumeSize: '10'
+        VolumeType: 'gp2'
+      AccessPolicies:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: 'Allow'
+            Principal:
+                AWS: "*"
+            Action: es:*
+            Resource: 'arn:aws:iam::226417489901:domain/photo'
+      DomainEndpointOptions:
+        EnforceHTTPS: true
+      EncryptionAtRestOptions:
+        Enabled: true
+      NodeToNodeEncryptionOptions:
+        Enabled: true
 
   RestApiPhotoAlbumDeployment:
     Type: AWS::ApiGateway::Deployment

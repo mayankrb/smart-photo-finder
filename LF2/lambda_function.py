@@ -3,6 +3,8 @@ import boto3
 import requests
 from requests_aws4auth import AWS4Auth
 
+#comment to check if pipeline is working
+
 def push_to_lex(query):
     #added old comment 1 for checking
     lex = boto3.client('lex-runtime')

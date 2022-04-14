@@ -7,7 +7,8 @@ import base64
 from datetime import datetime
 from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
- 
+
+#adding comment for demo purposes
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
  
